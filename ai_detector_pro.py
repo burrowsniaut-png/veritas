@@ -27,21 +27,6 @@ def analyze_with_deepseek(text):
     except Exception as e:
         return f"Analysis error: {str(e)}"
         
-        try:
-            text = scrape_website(url)
-            print(f"Scraped {len(text)} chars")
-            
-            print("Analyzing (up to 10 minutes)...")
-            result = analyze_with_deepseek(text)
-            
-            print(f"\nVERITAS ANALYSIS:")
-            print(result)
-            print(f"{'='*60}\n")
-            
-            results.append({"url": url, "analysis": result, "status": "ok"})
-            
-            with open('veritas_results.json', 'w') as f:
-                json.dump(results, f, indent=2)
             
             if i < len(url_list):
                 print("Cooling down (5s)...")
@@ -76,4 +61,5 @@ if __name__ == "__main__":
     if urls:
 
         analyze_urls(urls)
+
 
