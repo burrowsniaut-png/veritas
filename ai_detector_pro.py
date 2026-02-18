@@ -18,7 +18,7 @@ def analyze_with_deepseek(text):
     url = "http://localhost:11434/api/generate"
     data = {
         "model": "llama3.2:1b",
-        "prompt": f"Analyze this text and determine if it was written by a human or AI. Provide detailed analysis including Human vs AI probability, specific indicators, and confidence level. Text: {text[:2000]}",
+        "prompt": f"Analyze this text and determine if it was written by a human or AI. Provide detailed analysis. Text: {text[:2000]}", 
         "stream": False
     }
     try:
@@ -76,3 +76,4 @@ if __name__ == "__main__":
     if urls:
 
         analyze_urls(urls)
+
