@@ -28,38 +28,7 @@ def analyze_with_deepseek(text):
         return f"Analysis error: {str(e)}"
         
             
-            if i < len(url_list):
-                print("Cooling down (5s)...")
-                time.sleep(5)
-                
-        except Exception as e:
-            print(f"\nFAILED: {e}")
-            results.append({"url": url, "error": str(e), "status": "fail"})
-            with open('veritas_results.json', 'w') as f:
-                json.dump(results, f, indent=2)
-    
-    print(f"\n{'='*60}")
-    print(f"DONE. {len([r for r in results if r['status']=='ok'])} succeeded.")
-    print(f"{'='*60}")
-    
-    return results
+           
 
-# Only run interactive mode if called directly (not imported)
-if __name__ == "__main__":
-    # Get URLs (max 25)
-    urls = []
-    print("Enter URLs (one per line). Type 'done' when finished. Max 25:")
-    while len(urls) < 25:
-        url = input("URL: ").strip()
-        if url.lower() == 'done':
-            break
-        if url:
-            if not url.startswith('http'):
-                url = 'https://' + url
-            urls.append(url)
-    
-    if urls:
-
-        analyze_urls(urls)
 
 
