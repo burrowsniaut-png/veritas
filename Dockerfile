@@ -1,7 +1,7 @@
 FROM python:3.11-slim
 
 # Install Ollama and unzip
-RUN apt-get update && apt-get install -y curl unzip && \
+RUN apt-get update && apt-get install -y curl unzip zstd && \
     curl -fsSL https://ollama.com/install.sh | sh
 
 # Set working directory
@@ -27,3 +27,4 @@ CMD ollama serve & \
     sleep 5 && \
     ollama pull llama3.2:1b && \
     python veritas_web_app.py
+
