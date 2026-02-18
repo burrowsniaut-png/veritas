@@ -1,7 +1,7 @@
 FROM python:3.11-slim
 
-# Install Ollama
-RUN apt-get update && apt-get install -y curl && \
+# Install Ollama and unzip
+RUN apt-get update && apt-get install -y curl unzip && \
     curl -fsSL https://ollama.com/install.sh | sh
 
 # Set working directory
@@ -15,6 +15,9 @@ RUN pip install -r requirements.txt
 
 # Copy app files
 COPY . .
+
+# Extract templates.zip if it exists
+RUN if [ -f templates.zip ]; then unzip templates.zip && rm templates.zip; fi
 
 # Expose port
 EXPOSE 5000
