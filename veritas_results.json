@@ -1,0 +1,7 @@
+[
+  {
+    "url": "https://openai.com",
+    "analysis": "The text has been provided but it is currently empty. To determine whether the text was written by a human or AI, you can follow these steps:\n\n1. **Content Analysis**: Look for patterns such as spelling errors or repeated words that may be typical of human writing.\n\n2. **Usage of Spelling and Grammatical Errors**: Check if common misspellings occur or if specific phrases are frequently used instead of being constructed by the user.\n\n3. **Consistency with Dictionaries and Thesauri**: Verify if the text aligns with authoritative sources, which would indicate human intent.\n\n4. **Pattern of Language Use**: Note any specific phrases or structures that repeat multiple times, suggesting potential human intent over AI patterns.\n\n5. **Word Frequency Analysis**: Identify words that appear more frequently than average, indicating a higher likelihood of human contribution.\n\n6. **Synonyms and Antonyms**: Check for frequent word pairs with similar meanings to suggest human intent rather than AI-generated patterns.\n\n7. **Relevance of Context**: Assess if the text makes sense within its domain (e.g., news article vs. blog post) to infer its origin.\n\nWithout specific text, I can guide you on how to analyze it using these methods. If you provide a sample text, I'll simulate an analysis for you.",
+    "status": "ok"
+  }
+]
