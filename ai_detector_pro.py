@@ -18,14 +18,7 @@ def analyze_with_deepseek(text):
     url = "http://localhost:11434/api/generate"
     data = {
         "model": "llama3.2:1b",
-        "prompt": f"""Analyze this text and determine if it was written by a human or AI.
-Provide a detailed analysis including:
-- Human vs AI probability estimate
-- Specific indicators you noticed
-- Confidence level
-
-Text to analyze:
-{text[:2000]}""",
+        "prompt": f"Analyze this text and determine if it was written by a human or AI. Provide detailed analysis including Human vs AI probability, specific indicators, and confidence level. Text: {text[:2000]}",
         "stream": False
     }
     try:
@@ -33,11 +26,6 @@ Text to analyze:
         return response.json()['response']
     except Exception as e:
         return f"Analysis error: {str(e)}"
-    
-    for i, url in enumerate(url_list, 1):
-        print(f"\n{'='*60}")
-        print(f"[{i}/{len(url_list)}] {url}")
-        print(f"{'='*60}")
         
         try:
             text = scrape_website(url)
@@ -86,4 +74,5 @@ if __name__ == "__main__":
             urls.append(url)
     
     if urls:
+
         analyze_urls(urls)
