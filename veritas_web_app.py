@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import os
 from datetime import datetime
+import time
 from ai_detector_pro import scrape_website, analyze_with_deepseek
 
 app = Flask(__name__)
@@ -70,7 +71,7 @@ def analyze():
                         'status': 'ok',
                         'analysis': analysis
                     })
-                # 3 second delay between URLs to prevent Ollama timeout
+                
                 import time
                 time.sleep(3)
             except Exception as e:
@@ -104,3 +105,4 @@ def analyze():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
