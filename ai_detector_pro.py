@@ -22,6 +22,11 @@ genai.configure(api_key=os.environ.get('GEMINI_API_KEY'))
 
 def analyze_with_gemini(text):
     try:
+        # Debug: Check if API key is set
+        api_key = os.environ.get('GEMINI_API_KEY')
+        if not api_key:
+            return "Error: GEMINI_API_KEY not found in environment variables"
+        
         model = genai.GenerativeModel('gemini-pro')
         prompt = f"""Analyze this text and determine if it was written by AI or a human.
         
@@ -36,6 +41,7 @@ Text to analyze:
         response = model.generate_content(prompt)
         return response.text
     except Exception as e:
+        # Return the actual error message
         return f"Analysis error: {str(e)}"
     
     for i, url in enumerate(url_list, 1):
