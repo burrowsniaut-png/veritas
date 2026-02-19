@@ -100,7 +100,7 @@ def analyze():
         return output
         
     except Exception as e:
-        return f"Error running analysis: {str(e)}"
+        return f"<h2>Error running analysis</h2><p style='color:red'>{str(e)}</p><br><a href='/dashboard'>Back to Dashboard</a>"
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
