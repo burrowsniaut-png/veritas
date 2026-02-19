@@ -57,12 +57,8 @@ def analyze():
         for url in urls:
             try:
                 content = scrape_website(url)
+                print(f"DEBUG: Scrape result: {content[:100]}")  # Add this line
                 if content.startswith("Error"):
-                    results_list.append({
-                        'url': url,
-                        'status': 'error',
-                        'analysis': content
-                    })
                 else:
                     analysis = analyze_with_gemini(content)
                     results_list.append({
