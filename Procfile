@@ -1,0 +1,1 @@
+web: gunicorn veritas_web_app:app
