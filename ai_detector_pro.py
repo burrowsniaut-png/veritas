@@ -54,7 +54,7 @@ Text to analyze:
             print(f"Scraped {len(text)} chars")
             
             print("Analyzing (up to 10 minutes)...")
-            result = analyze_with_deepseek(text)
+            result = analyze_with_gemini(text)
             
             print(f"\nVERITAS ANALYSIS:")
             print(result)
