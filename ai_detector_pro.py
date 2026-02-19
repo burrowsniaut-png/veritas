@@ -14,23 +14,27 @@ def scrape_website(url):
 
 import requests
 
-def analyze_with_deepseek(text):
-    url = "http://localhost:11434/api/generate"
-    data = {
-        "model": "llama3.2:1b",
-        "prompt": f"""Analyze this text and determine if it was written by a human or AI.
+import google.generativeai as genai
+import os
+
+# Configure Gemini with API key from environment variable
+genai.configure(api_key=os.environ.get('GEMINI_API_KEY'))
+
+def analyze_with_gemini(text):
+    try:
+        model = genai.GenerativeModel('gemini-pro')
+        prompt = f"""Analyze this text and determine if it was written by AI or a human.
+        
 Provide a detailed analysis including:
 - Human vs AI probability estimate
 - Specific indicators you noticed
 - Confidence level
 
 Text to analyze:
-{text[:2000]}""",
-        "stream": False
-    }
-    try:
-        response = requests.post(url, json=data, timeout=300)
-        return response.json()['response']
+{text[:3000]}"""
+        
+        response = model.generate_content(prompt)
+        return response.text
     except Exception as e:
         return f"Analysis error: {str(e)}"
     

@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import os
 from datetime import datetime
-from ai_detector_pro import scrape_website, analyze_with_deepseek
+from ai_detector_pro import scrape_website, analyze_with_gemini
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-here'
@@ -64,7 +64,7 @@ def analyze():
                         'analysis': content
                     })
                 else:
-                    analysis = analyze_with_deepseek(content)
+                    analysis = analyze_with_gemini(content)
                     results_list.append({
                         'url': url,
                         'status': 'ok',
