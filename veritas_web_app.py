@@ -89,7 +89,7 @@ def analyze():
             if result['status'] == 'ok':
                 output += f"<p>{result['analysis']}</p>"
             else:
-                output += f"<p style='color:red'>Error: {result.get('error', 'Unknown error')}</p>"
+                output += f"<p style='color:red'>Error: {result.get('analysis', 'Unknown error')}</p>"
             output += "<hr>"
         
         output += "<br><a href='/dashboard'>Back to Dashboard</a>"
