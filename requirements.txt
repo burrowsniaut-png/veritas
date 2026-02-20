@@ -1,0 +1,6 @@
+flask
+requests
+playwright
+openai
+
+
