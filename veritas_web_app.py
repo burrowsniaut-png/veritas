@@ -67,65 +67,34 @@ def dashboard():
 @app.route('/analyze', methods=['POST'])
 @login_required
 def analyze():
-    urls = request.form.get('urls', '').strip().split('\n')
-    urls = [url.strip() for url in urls if url.strip()][:25]
-    
-    if not urls:
-        return "No URLs provided"
+    # DEBUG LOGGING AT THE VERY START
+    print(f"DEBUG: Analyze function started")
+    print(f"DEBUG: User: {session.get('username')}")
+    print(f"DEBUG: Form data: {dict(request.form)}")
     
     try:
+        urls = request.form.get('urls', '').strip().split('\n')
+        urls = [url.strip() for url in urls if url.strip()][:25]
+        
+        print(f"DEBUG: Parsed URLs: {urls}")
+        
+        if not urls:
+            print("DEBUG: No URLs provided")
+            return "No URLs provided"
+        
         results_list = []
+        
         for url in urls:
+            print(f"DEBUG: Processing URL: {url}")
+            
             try:
+                print(f"DEBUG: About to scrape: {url}")
                 content = scrape_website(url)
+                print(f"DEBUG: Scrape result: {content[:100] if content else 'EMPTY'}")
                 
                 if content.startswith("Error"):
+                    print(f"DEBUG: Scrape error detected")
                     results_list.append({
                         'url': url,
                         'status': 'error',
                         'analysis': content
-                    })
-                else:
-                    analysis = analyze_with_gemini(content)
-                    results_list.append({
-                        'url': url,
-                        'status': 'ok',
-                        'analysis': analysis
-                    })
-                
-                import time
-                time.sleep(3)
-                
-            except Exception as e:
-                results_list.append({
-                    'url': url,
-                    'status': 'error',
-                    'analysis': f"Analysis failed: {str(e)}"
-                })
-        
-        results[session['username']] = {
-            'urls': urls,
-            'results': results_list,
-            'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            'status': 'completed'
-        }
-        
-        output = "<h2>Analysis Results</h2>"
-        for result in results_list:
-            output += f"<h3>{result['url']}</h3>"
-            if result['status'] == 'ok':
-                output += f"<p>{result['analysis']}</p>"
-            else:
-                output += f"<p style='color:red'>Error: {result['analysis']}</p>"
-            output += "<hr>"
-        
-        output += "<br><a href='/dashboard'>Back to Dashboard</a>"
-        return output
-        
-    except Exception as e:
-        import traceback
-        error_details = traceback.format_exc()
-        return f"<h2>Error running analysis</h2><p style='color:red'>{str(e)}</p><pre>{error_details}</pre><br><a href='/dashboard'>Back to Dashboard</a>"
-
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
