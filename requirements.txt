@@ -4,4 +4,3 @@ playwright
 gunicorn
 beautifulsoup4
 google-generativeai
-
