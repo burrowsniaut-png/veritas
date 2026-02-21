@@ -1,6 +1,7 @@
 flask
 requests
 playwright
-openai
-
+gunicorn
+beautifulsoup4
+google-generativeai
 
