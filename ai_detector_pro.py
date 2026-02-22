@@ -2,7 +2,7 @@ import requests
 from playwright.sync_api import sync_playwright
 import time
 import json
-import google.generativeai as genai
+from google import genai
 import os
 
 def scrape_website(url):
@@ -15,7 +15,7 @@ def scrape_website(url):
         return text
 
 # Configure Gemini with API key from environment variable
-genai.configure(api_key=os.environ.get('GEMINI_API_KEY'))
+client = genai.Client(api_key=os.environ.get('GEMINI_API_KEY'))
 
 def analyze_with_gemini(text):
     try:
@@ -24,7 +24,6 @@ def analyze_with_gemini(text):
         if not api_key:
             return "Error: GEMINI_API_KEY not found in environment variables"
         
-        model = genai.GenerativeModel('gemini-pro')
         prompt = f"""Analyze this text and determine if it was written by a human or AI.
 
 Provide a detailed analysis including:
@@ -35,7 +34,10 @@ Provide a detailed analysis including:
 Text to analyze:
 {text[:3000]}"""
 
-        response = model.generate_content(prompt)
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=prompt
+        )
         return response.text
     except Exception as e:
         return f"Error analyzing text: {str(e)}"
