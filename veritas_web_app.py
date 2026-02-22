@@ -73,8 +73,8 @@ def analyze():
     print(f"DEBUG: Form data: {dict(request.form)}")
     
     try:
-        urls = request.form.get('urls', '').strip().split('\n'))
-        urls = [url.strip() for url in urls if url.strip()][:25])
+        urls = request.form.get('urls', '').strip().split('\n')
+        urls = [url.strip() for url in urls if url.strip()][:25]
         
         print(f"DEBUG: Parsed URLs: {urls}")
         
