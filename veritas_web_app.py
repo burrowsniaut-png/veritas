@@ -94,7 +94,7 @@ def analyze():
                 
                 if content.startswith("Error"):
                     print(f"DEBUG: Scrape error detected")
-                    results_list.append({)
+                    results_list.append({(
                         'url': url,
                         'status': 'error',
                         'analysis': content
