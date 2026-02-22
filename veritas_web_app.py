@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from functools import wraps
 from datetime import datetime
 import json
@@ -98,3 +98,88 @@ def analyze():
                         'url': url,
                         'status': 'error',
                         'analysis': content
+                    })
+                else:
+                    print(f"DEBUG: About to analyze with Gemini")
+                    analysis = analyze_with_gemini(content)
+                    print(f"DEBUG: Gemini result: {analysis[:100] if analysis else 'None'}")
+                    
+                    results_list.append({
+                        'url': url,
+                        'status': 'success',
+                        'analysis': analysis
+                    })
+                
+                # Save results after each URL
+                results[session['username']] = {
+                    'timestamp': datetime.now().isoformat(),
+                    'results': results_list
+                }
+                
+            except Exception as e:
+                print(f"DEBUG: Exception processing URL: {e}")
+                results_list.append({
+                    'url': url,
+                    'status': 'error',
+                    'analysis': str(e)
+                })
+        
+        print(f"DEBUG: Returning {len(results_list)} results")
+        return render_template('results.html', results=results_list, username=session['username'])
+        
+    except Exception as e:
+        print(f"DEBUG: Top level exception: {e}")
+        return f"Error: {str(e)}"
+
+@app.route('/history')
+@login_required
+def history():
+    user_results = results.get(session['username'], {})
+    return render_template('history.html', results=user_results, username=session['username'])
+
+@app.route('/api/analyze', methods=['POST'])
+@login_required
+def api_analyze():
+    data = request.get_json()
+    urls = data.get('urls', [])
+    
+    if not urls:
+        return jsonify({'error': 'No URLs provided'}), 400
+    
+    urls = [url.strip() for url in urls if url.strip()][:25]
+    results_list = []
+    
+    for url in urls:
+        try:
+            content = scrape_website(url)
+            
+            if content.startswith("Error"):
+                results_list.append({
+                    'url': url,
+                    'status': 'error',
+                    'analysis': content
+                })
+            else:
+                analysis = analyze_with_gemini(content)
+                results_list.append({
+                    'url': url,
+                    'status': 'success',
+                    'analysis': analysis
+                })
+        except Exception as e:
+            results_list.append({
+                'url': url,
+                'status': 'error',
+                'analysis': str(e)
+            })
+    
+    # Save results
+    results[session['username']] = {
+        'timestamp': datetime.now().isoformat(),
+        'results': results_list
+    }
+    
+    return jsonify({'results': results_list})
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5000)
