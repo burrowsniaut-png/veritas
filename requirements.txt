@@ -3,5 +3,6 @@ requests
 playwright
 gunicorn
 beautifulsoup4
-google-generativeai
+google-genai
+
 
