@@ -74,7 +74,7 @@ def analyze():
     
     try:
         urls = request.form.get('urls', '').strip().split('\n')
-        urls = [url.strip() for url in urls if url.strip()][:25]
+        urls = [url.strip() for url in urls if url.strip()][:25])
         
         print(f"DEBUG: Parsed URLs: {urls}")
         
