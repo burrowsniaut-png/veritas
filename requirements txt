@@ -3,3 +3,6 @@ requests
 playwright
 gunicorn
 google-generativeai
+beautifulsoup4
+chromium
+openai
