@@ -74,7 +74,7 @@ def analyze():
     
     try:
         urls = request.form.get('urls', '').strip().split('\n')
-        urls = [url.strip() for url in urls if url.strip()][:25]
+        urls = [url.strip() for url in urls if url.strip()][:25])
         
         print(f"DEBUG: Parsed URLs: {urls}")
         
@@ -94,7 +94,7 @@ def analyze():
                 
                 if content.startswith("Error"):
                     print(f"DEBUG: Scrape error detected")
-                    results_list.append({(
+                    results_list.append({
                         'url': url,
                         'status': 'error',
                         'analysis': content
