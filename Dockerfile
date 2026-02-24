@@ -1,5 +1,5 @@
-# Use a Python base image
-FROM python:3.11-slim
+# Use a Python base image with more system packages
+FROM python:3.11
 
 # Install system dependencies for Playwright
 RUN apt-get update && apt-get install -y \
@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y \
     libxdamage1 \
     libxext6 \
     libxfixes3 \
-    librandr2 \
+    libxrandr2 \
     libgbm1 \
     libpango-1.0-0 \
     libcairo2 \
@@ -34,6 +34,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN playwright install chromium
 RUN playwright install-deps chromium
 
-COPY . .
+COPY .
 
-CMD ["python", "veritas_web_app.py"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "veritas_web_app:app"]
