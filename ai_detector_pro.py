@@ -2,7 +2,7 @@ import requests
 from playwright.sync_api import sync_playwright
 import time
 import json
-import google.generativeai as genai
+from google import genai
 import os
 
 def scrape_website(url):
