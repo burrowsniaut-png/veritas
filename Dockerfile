@@ -34,6 +34,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN playwright install chromium
 RUN playwright install-deps chromium
 
-COPY .
+COPY . .
 
 CMD ["gunicorn", "--bind", "0.0.0.0:8080", "veritas_web_app:app"]
+
