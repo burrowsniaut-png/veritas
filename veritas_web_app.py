@@ -73,7 +73,7 @@ def analyze():
     print(f"DEBUG: Form data: {dict(request.form)}")
     
     urls = request.form.get('urls', '').strip().split('\n')
-    urls = [url.strip() for url in urls if url.strip()][:25])
+    urls = [url.strip() for url in urls if url.strip()][:25]
     
     print(f"DEBUG: Parsed URLs: {urls}")
     
@@ -169,4 +169,5 @@ def api_analyze():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
+
 
